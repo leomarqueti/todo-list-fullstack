@@ -19,6 +19,11 @@ public class DeleteUseCase
     {
         var toDo = _repository.GetById(id);
 
+        if (toDo is null)
+        {
+            throw new ArgumentException("Nao existe essa tarefa");
+        }
+
         if (toDo is not null)
         {
             _repository.Delete(toDo);

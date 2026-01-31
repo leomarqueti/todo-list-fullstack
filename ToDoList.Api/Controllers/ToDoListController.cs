@@ -15,13 +15,24 @@ public class ToDoListController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisterToDoJson),StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
 
     public IActionResult Register([FromBody] RequestRegisterToDoListJson request, [FromServices] IToDoRepository repository)
     {
-     
-        var toDo = new RegisterUseCase(repository).Execute(request);
+        
+        try
+        {
+            var toDo = new RegisterUseCase(repository).Execute(request);
 
-        return Created(string.Empty, toDo);
+            return Created(string.Empty, toDo);
+        } catch (ArgumentException ex)
+        {
+            return BadRequest(new {message = ex.Message});
+        } catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {message = ex.Message});
+        }
+        
     }
 
     [HttpGet]
@@ -94,17 +105,25 @@ public class ToDoListController : ControllerBase
 
     public IActionResult Delete([FromRoute] Guid id, [FromServices] IToDoRepository repository) 
     {
-        var check = repository.GetById(id);
 
-        if (check == null)
+        try
         {
-            return NotFound();
+            var useCase = new DeleteUseCase(repository);
+
+            useCase.Execute(id);
+            return NoContent();
         }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message});
+        }
+        
 
-        var useCase = new DeleteUseCase(repository);
+        
+            
+        
 
-        useCase.Execute(id);
-        return NoContent();
+        
     }
 
 
