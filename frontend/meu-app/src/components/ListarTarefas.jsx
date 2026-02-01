@@ -4,7 +4,6 @@ export default function ListarTarefas({ tarefas, carregando }) {
 
   return (
     <div>
-      <h2>Lista de tarefas</h2>
       <ul>
         {tarefas.map((item) => (
           <li key={item.id}>

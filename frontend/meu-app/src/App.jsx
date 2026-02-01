@@ -30,13 +30,21 @@ function App() {
   };
 
   return (
-    <>
-      {/* Passamos a função de atualização para o filho que registra */}
-      <RegistrarTarefas aoAdicionar={adicionarNaLista} />
-      <hr />
-      {/* Passamos os dados e o status de carregamento para o filho que lista */}
-      <ListarTarefas tarefas={tarefas} carregando={carregando} />
-    </>
+    /* Mudamos a div principal para ser o "cenário" da mesa */
+    <div className="cenario-mesa">
+      {/* Este container é a área "focada" onde o caderno está */}
+      <div className="area-caderno-container">
+        {/* Esta é a div MÁGICA: o papel com linhas CSS */}
+        <div className="papel-com-linhas">
+          <RegistrarTarefas aoAdicionar={adicionarNaLista} />
+          {/* Passamos os dados para o filho que lista */}
+          <ListarTarefas tarefas={tarefas} carregando={carregando} />
+        </div>
+      </div>
+
+      {/* Se quiser o formulário fora do caderno, coloque ele aqui em baixo ou em outro lugar */}
+      {/* <RegistrarTarefas aoAdicionar={adicionarNaLista} /> */}
+    </div>
   );
 }
 

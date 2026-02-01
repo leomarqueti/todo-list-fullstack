@@ -1,42 +1,148 @@
+/* --- 1. CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
+:root {
+  /* ESTA É A LEI: A altura da linha controla o ritmo vertical do site inteiro */
+  --altura-linha: 40px;
+
+  /* Defina cores aqui para facilitar mudanças futuras */
+  --cor-papel: #f4ecd8;
+  --cor-linha: #94a3b8;
+  --cor-linha-meio: #8a9aac;
+  --cor-texto: #1a1a1a;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family:
+    "Just Another Hand", cursive; /* Fonte global para garantir herança */
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  height: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* --- 2. O CENÁRIO (MESA) --- */
+.cenario-mesa {
+  background-image: url("./assets/image_0.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Container de posicionamento */
+.area-caderno-container {
+  width: 900px; /* Ajuste conforme necessário para sua imagem */
+  height: 600px;
+  position: relative;
 }
 
-.card {
-  padding: 2em;
+/* --- 3. O PAPEL (BACKGROUND E LINHAS) --- */
+.papel-com-linhas {
+  position: absolute;
+  top: -3%;
+  left: -4%;
+  width: 98%;
+  height: 118%;
+  padding: 1px 50px;
+  overflow-y: auto;
+  border-radius: 28px;
+  background-color: var(--cor-papel);
+
+  /* Sombra interna para profundidade */
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15);
+
+  /* A MÁGICA DOS GRADIENTES (Usando a Variável) */
+  background-image:
+    /* 1. Linha Vertical (Meio) */
+    linear-gradient(
+      to right,
+      transparent 49.8%,
+      var(--cor-linha-meio) 49.8%,
+      var(--cor-linha-meio) 50.2%,
+      transparent 50.2%
+    ),
+    /* 2. Linhas Horizontais (Usando --altura-linha) */
+    repeating-linear-gradient(
+        to bottom,
+        var(--cor-linha) 0px,
+        var(--cor-linha) 2px,
+        transparent 2px,
+        transparent var(--altura-linha) /* <--- O SEGREDO ESTÁ AQUI */
+      );
 }
 
-.read-the-docs {
-  color: #888;
+/* --- 4. REGRAS UNIFICADAS DE TEXTO (DRY - Don't Repeat Yourself) --- */
+/* Isso garante que Input e Li sejam IDÊNTICOS matematicamente */
+li,
+.input-caderno {
+  /* Geometria Sagrada do Caderno */
+  height: var(--altura-linha);
+  line-height: var(--altura-linha);
+
+  /* Tipografia */
+  font-size: 30px; /* 30px costuma encaixar melhor em linha de 40px */
+  color: var(--cor-texto);
+  font-family: "Just Another Hand", cursive;
+
+  /* Layout Flex para centralizar texto na linha */
+  display: flex;
+  align-items: center; /* Centraliza verticalmente */
+
+  /* Resets */
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+
+  /* AJUSTE FINO DE POSIÇÃO */
+  /* Se o texto estiver "voando", aumente este padding-top */
+  padding-top: 6px;
+  padding-left: 10px; /* Espaço para não colar na margem ou bullet */
+}
+
+/* --- 5. ESTILOS ESPECÍFICOS DA LISTA --- */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* O pontinho da lista (Bullet Point) */
+li:before {
+  content: "•";
+  margin-right: 10px;
+  color: #555;
+  font-size: 0.8em; /* Pontinho um pouco menor */
+}
+
+/* --- 6. ESTILOS ESPECÍFICOS DO FORMULÁRIO --- */
+.form-caderno {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+/* Inputs específicos */
+.input-caderno {
+  width: 100%;
+}
+
+.input-caderno::placeholder {
+  color: #94a3b8;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.btn-escondido {
+  display: none;
 }
