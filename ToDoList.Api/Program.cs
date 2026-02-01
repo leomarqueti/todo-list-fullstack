@@ -11,7 +11,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MinhaAppReact", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") // URL do seu front
+        // Substitui a URL fixa por AllowAnyOrigin() para testes
+        // Ou coloca a URL exata que aparece no teu navegador
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
