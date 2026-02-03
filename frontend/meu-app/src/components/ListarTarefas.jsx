@@ -1,16 +1,16 @@
-export default function ListarTarefas({ tarefas, carregando }) {
-  // Recebe via Props
-  if (carregando) return <p>Carregando tarefas...</p>;
-
+export default function ListarTarefas({ tarefas, aoClicar }) {
   return (
-    <div>
-      <ul>
-        {tarefas.map((item) => (
-          <li key={item.id}>
+    <ul>
+      {tarefas.map((item) => (
+        <li key={item.id}>
+          <button
+            className="botao-tarefa-caderno"
+            onClick={() => aoClicar(item.id)}
+          >
             <strong>{item.name}</strong>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }

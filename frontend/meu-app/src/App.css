@@ -1,9 +1,6 @@
-/* --- 1. CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
 :root {
-  /* ESTA É A LEI: A altura da linha controla o ritmo vertical do site inteiro */
   --altura-linha: 40px;
 
-  /* Defina cores aqui para facilitar mudanças futuras */
   --cor-papel: #f4ecd8;
   --cor-linha: #94a3b8;
   --cor-linha-meio: #8a9aac;
@@ -16,17 +13,15 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family:
-    "Just Another Hand", cursive; /* Fonte global para garantir herança */
+  font-family: "Just Another Hand", cursive;
 }
 
 #root {
   height: 100%;
 }
 
-/* --- 2. O CENÁRIO (MESA) --- */
 .cenario-mesa {
-  background-image: url("./assets/image_0.png");
+  background-color: rgb(0 127 127);
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -37,31 +32,29 @@ body {
   position: relative;
 }
 
-/* Container de posicionamento */
 .area-caderno-container {
-  width: 900px; /* Ajuste conforme necessário para sua imagem */
+  width: 900px;
   height: 600px;
   position: relative;
+  margin-bottom: 95px;
 }
 
-/* --- 3. O PAPEL (BACKGROUND E LINHAS) --- */
 .papel-com-linhas {
   position: absolute;
   top: -3%;
   left: -4%;
   width: 98%;
-  height: 118%;
-  padding: 1px 50px;
-  overflow-y: auto;
+  height: 107%;
+  padding: 39px 40px;
+  overflow-y: hidden;
   border-radius: 28px;
   background-color: var(--cor-papel);
-
-  /* Sombra interna para profundidade */
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15);
-
-  /* A MÁGICA DOS GRADIENTES (Usando a Variável) */
+  box-shadow: 12px 15px 20px 0px rgb(0 0 0 / 40%);
+  column-count: 2;
+  column-gap: 80px;
+  border: 14px solid #535050;
+  column-fill: auto;
   background-image:
-    /* 1. Linha Vertical (Meio) */
     linear-gradient(
       to right,
       transparent 49.8%,
@@ -69,34 +62,27 @@ body {
       var(--cor-linha-meio) 50.2%,
       transparent 50.2%
     ),
-    /* 2. Linhas Horizontais (Usando --altura-linha) */
     repeating-linear-gradient(
-        to bottom,
-        var(--cor-linha) 0px,
-        var(--cor-linha) 2px,
-        transparent 2px,
-        transparent var(--altura-linha) /* <--- O SEGREDO ESTÁ AQUI */
-      );
+      to bottom,
+      var(--cor-linha) 0px,
+      var(--cor-linha) 2px,
+      transparent 2px,
+      transparent var(--altura-linha)
+    );
 }
 
-/* --- 4. REGRAS UNIFICADAS DE TEXTO (DRY - Don't Repeat Yourself) --- */
-/* Isso garante que Input e Li sejam IDÊNTICOS matematicamente */
 li,
 .input-caderno {
-  /* Geometria Sagrada do Caderno */
   height: var(--altura-linha);
   line-height: var(--altura-linha);
 
-  /* Tipografia */
-  font-size: 30px; /* 30px costuma encaixar melhor em linha de 40px */
+  font-size: 30px;
   color: var(--cor-texto);
   font-family: "Just Another Hand", cursive;
 
-  /* Layout Flex para centralizar texto na linha */
   display: flex;
-  align-items: center; /* Centraliza verticalmente */
+  align-items: center;
 
-  /* Resets */
   margin: 0;
   padding: 0;
   border: none;
@@ -104,35 +90,29 @@ li,
   outline: none;
   box-sizing: border-box;
 
-  /* AJUSTE FINO DE POSIÇÃO */
-  /* Se o texto estiver "voando", aumente este padding-top */
   padding-top: 6px;
-  padding-left: 10px; /* Espaço para não colar na margem ou bullet */
+  padding-left: 10px;
 }
 
-/* --- 5. ESTILOS ESPECÍFICOS DA LISTA --- */
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-/* O pontinho da lista (Bullet Point) */
 li:before {
   content: "•";
   margin-right: 10px;
   color: #555;
-  font-size: 0.8em; /* Pontinho um pouco menor */
+  font-size: 0.8em;
 }
 
-/* --- 6. ESTILOS ESPECÍFICOS DO FORMULÁRIO --- */
 .form-caderno {
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
 }
 
-/* Inputs específicos */
 .input-caderno {
   width: 100%;
 }
@@ -145,4 +125,68 @@ li:before {
 
 .btn-escondido {
   display: none;
+}
+
+li,
+.form-caderno {
+  break-inside: avoid;
+  page-break-inside: avoid;
+
+  display: flex;
+}
+
+.botao-tarefa-caderno {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+}
+.botao-tarefa-caderno:hover {
+  color: #0056b3;
+}
+
+.botao-voltar {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 1.1em;
+  color: #0056b3;
+
+  padding: 0;
+  margin: 0;
+
+  transition: transform 0.2s;
+}
+
+.botao-voltar:hover {
+  text-decoration: underline;
+  transform: translateX(-5px);
+}
+
+.botao-excluir {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 1em;
+
+  color: #c0392b;
+
+  padding: 0;
+  margin: 0;
+  transition: all 0.2s;
+}
+
+.botao-excluir:hover {
+  font-weight: bold;
+  text-decoration: line-through;
+  color: #e74c3c;
 }

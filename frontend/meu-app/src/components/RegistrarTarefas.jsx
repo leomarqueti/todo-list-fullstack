@@ -7,7 +7,6 @@ export default function RegistrarTarefas({ aoAdicionar }) {
   const adicionarTarefa = async (e) => {
     e.preventDefault();
 
-    // Validação simples para não enviar vazio
     if (!nome.trim()) return;
 
     const novaTarefaObj = {
@@ -30,9 +29,6 @@ export default function RegistrarTarefas({ aoAdicionar }) {
         aoAdicionar(tarefaCriada);
         setNome("");
         setDescription("");
-
-        // Opcional: Colocar o foco de volta no input de nome
-        // document.getElementById("input-nome").focus();
       }
     } catch (erro) {
       console.error("Erro ao adicionar", erro);
@@ -40,14 +36,10 @@ export default function RegistrarTarefas({ aoAdicionar }) {
   };
 
   return (
-    /* Aplicamos a classe form-caderno */
     <form onSubmit={adicionarTarefa} className="form-caderno">
-      {/* Removemos o H2 para não quebrar a imersão */}
-
-      {/* Input 1: Nome da Tarefa */}
       <input
         id="input-nome"
-        className="input-caderno" /* Classe nova */
+        className="input-caderno"
         value={nome}
         onChange={(e) => setNome(e.target.value)}
         required
@@ -55,7 +47,6 @@ export default function RegistrarTarefas({ aoAdicionar }) {
         autoComplete="off"
       />
 
-      {/* Input 2: Descrição (Opcional: se quiser que pareça um subtítulo) */}
       <input
         className="input-caderno"
         value={description}
@@ -65,10 +56,9 @@ export default function RegistrarTarefas({ aoAdicionar }) {
         style={{
           fontSize: "24px",
           color: "#555",
-        }} /* Um pouco menor para diferenciar */
+        }}
       />
 
-      {/* Botão escondido apenas para permitir submit com "Enter" */}
       <button type="submit" className="btn-escondido">
         Adicionar
       </button>

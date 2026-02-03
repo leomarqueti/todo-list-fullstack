@@ -1,49 +1,92 @@
 import { useState, useEffect } from "react";
 import ListarTarefas from "./components/ListarTarefas";
 import RegistrarTarefas from "./components/RegistrarTarefas";
+import TarefaCompleta from "./components/TarefaCompleta";
 import "./App.css";
 
 function App() {
   const [tarefas, setTarefas] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+  const [tarefaSelecionada, setTarefaSelecionada] = useState(null);
+  const [carregandoDetalhes, setCarregandoDetalhes] = useState(false);
 
   const API_URL = "https://localhost:7283/api/ToDoList";
 
-  // Função para buscar dados (GET)
-  const buscarDados = () => {
+  const buscarLista = () => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((dados) => {
-        setTarefas(dados.toDoList || []);
-        setCarregando(false);
-      })
-      .catch(() => setCarregando(false));
+      .then((dados) => setTarefas(dados.toDoList || []));
   };
 
   useEffect(() => {
-    buscarDados();
+    buscarLista();
   }, []);
 
-  // Função que o filho vai chamar após o POST
   const adicionarNaLista = (novaTarefa) => {
-    setTarefas((listaAntiga) => [...listaAntiga, novaTarefa]);
+    setTarefas((prev) => [...prev, novaTarefa]);
+  };
+
+  const abrirDetalhes = async (id) => {
+    setCarregandoDetalhes(true);
+    try {
+      const resposta = await fetch(`${API_URL}/${id}`);
+      if (resposta.ok) {
+        const dados = await resposta.json();
+        setTarefaSelecionada(dados);
+      }
+    } catch (error) {
+      console.error("Erro", error);
+    } finally {
+      setCarregandoDetalhes(false);
+    }
+  };
+
+  const voltarParaLista = () => {
+    setTarefaSelecionada(null);
+  };
+
+  const excluirTarefa = async (id) => {
+    const confirmacao = window.confirm(
+      "Tem certeza que quer rasgar essa folha? (Excluir tarefa)",
+    );
+    if (!confirmacao) return;
+
+    try {
+      const resposta = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (resposta.ok) {
+        setTarefas((listaAtual) => listaAtual.filter((t) => t.id !== id));
+
+        setTarefaSelecionada(null);
+      } else {
+        alert("Não foi possível excluir a tarefa.");
+      }
+    } catch (error) {
+      console.error("Erro ao excluir:", error);
+    }
   };
 
   return (
-    /* Mudamos a div principal para ser o "cenário" da mesa */
     <div className="cenario-mesa">
-      {/* Este container é a área "focada" onde o caderno está */}
       <div className="area-caderno-container">
-        {/* Esta é a div MÁGICA: o papel com linhas CSS */}
         <div className="papel-com-linhas">
-          <RegistrarTarefas aoAdicionar={adicionarNaLista} />
-          {/* Passamos os dados para o filho que lista */}
-          <ListarTarefas tarefas={tarefas} carregando={carregando} />
+          {!tarefaSelecionada ? (
+            <>
+              <RegistrarTarefas aoAdicionar={adicionarNaLista} />
+
+              <ListarTarefas tarefas={tarefas} aoClicar={abrirDetalhes} />
+            </>
+          ) : (
+            <TarefaCompleta
+              tarefa={tarefaSelecionada}
+              carregando={carregandoDetalhes}
+              aoVoltar={voltarParaLista}
+              aoExcluir={excluirTarefa}
+            />
+          )}
         </div>
       </div>
-
-      {/* Se quiser o formulário fora do caderno, coloque ele aqui em baixo ou em outro lugar */}
-      {/* <RegistrarTarefas aoAdicionar={adicionarNaLista} /> */}
     </div>
   );
 }
