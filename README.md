@@ -2,6 +2,9 @@
 
 Este projeto é um **Gerenciador de Tarefas Fullstack** desenvolvido com uma API RESTful em **.NET 8.0** e um frontend reativo em **React**. Ele foi arquitetado com foco em **Clean Architecture**, utilizando **Entity Framework Core** para persistência de dados em **SQL Server**, e seguindo **padrões RESTful** para a comunicação entre as camadas. O objetivo principal é demonstrar boas práticas de engenharia de software, desacoplamento e manutenibilidade.
 
+<img width="1702" height="911" alt="image" src="https://github.com/user-attachments/assets/0092dd91-f260-40c5-805d-b3071f5639f8" />
+
+
 ## Tecnologias Utilizadas
 
 ### Backend (API .NET)
