@@ -4,6 +4,8 @@ Este projeto é um **Gerenciador de Tarefas Fullstack** desenvolvido com uma API
 
 <img width="1702" height="911" alt="image" src="https://github.com/user-attachments/assets/0092dd91-f260-40c5-805d-b3071f5639f8" />
 
+<img width="1494" height="861" alt="image" src="https://github.com/user-attachments/assets/1e3f4804-000c-4fb5-afaa-c2f2bc497216" />
+
 
 ## Tecnologias Utilizadas
 
